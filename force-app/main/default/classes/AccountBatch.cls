@@ -1,4 +1,5 @@
 
+// created batch
 public class AccountBatch implements Database.batchable<sobject>, database.stateful{
     //start
     //execute
@@ -29,7 +30,7 @@ public class AccountBatch implements Database.batchable<sobject>, database.state
         system.debug('records updated in THIS chunk: ' + updateAcc.size());
         system.debug('TOTAL records updated TILL NOW: ' + countRecords);
     }
-
+// finish
     public void finish(Database.BatchableContext bc){
         system.debug('BATCH PROCESSED. ENJOY.');
         system.debug('TOTAL records processed is ' + countRecords);
