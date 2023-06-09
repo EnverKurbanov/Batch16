@@ -2,16 +2,24 @@ public class SalesforceProjectTriggerHandler {
 
     public static void createDefaultTicket(List<salesforce_project__c> spTriggerNew) {
         //create list<st>
-        list<Salesforce_Ticket__c> listST = new List<Salesforce_Ticket__c>();
-        for (Salesforce_Project__c newSP : spTriggerNew) {
-            Salesforce_Ticket__c st = new Salesforce_Ticket__c();
-            st.Subject__c = 'Default ST';
-            st.Salesforce_Project__c = newSP.Id; //relationship field
-            listST.add(st);
-        }
-        if (!listST.isEmpty()) {
-            insert listST;
-        }
+        try{
+            list<Salesforce_Ticket__c> listST = new List<Salesforce_Ticket__c>();
+            for (Salesforce_Project__c newSP : spTriggerNew) {
+                Salesforce_Ticket__c st = new Salesforce_Ticket__c();
+                st.Subject__c = 'Default ST';
+                st.Salesforce_Project__c = newSP.Id;
+                 //relationship field
+                //  st.priority__c='High';
+                listST.add(st);
+            }
+            if (!listST.isEmpty()) {
+                insert listST;
+            }
+        }catch(Exception Ex){
+                for (Salesforce_Project__c newSP : spTriggerNew) {
+                    newSP.addError('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                }
+            }
     }
 
     public static void validate1(List<salesforce_project__c> spTriggerNew, List<salesforce_project__c> spTriggerOld, Map<id, Salesforce_Project__c> spTriggerNewMap,Map<id, Salesforce_Project__c> spTriggerOldMap ) {
